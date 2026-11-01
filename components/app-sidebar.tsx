@@ -1,11 +1,12 @@
-import {
-  BlocksIcon,
-  Gamepad2Icon,
-  HomeIcon,
-  SettingsIcon,
-  SparklesIcon,
-} from "lucide-react"
+"use client"
 
+import { OrganizationSwitcher, UserButton } from "@clerk/nextjs"
+import { CoinsIcon, SquarePenIcon } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+
+import { Empty, EmptyDescription } from "@/components/ui/empty"
 import {
   Sidebar,
   SidebarContent,
@@ -15,48 +16,57 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  SidebarTrigger,
 } from "@/components/ui/sidebar"
 
 function AppSidebar() {
+  const pathname = usePathname()
+
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size="lg">
-              <SparklesIcon />
-              <span>Sandbox</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+      <SidebarHeader className="flex-row items-center justify-between group-data-[collapsible=icon]:flex-col">
+        <div className="flex items-center gap-2 p-2 group-data-[collapsible=icon]:p-0">
+          <Image
+            src="/logo.svg"
+            alt=""
+            width={20}
+            height={20}
+            className="size-5"
+          />
+          <span className="font-logo text-base leading-tight group-data-[collapsible=icon]:hidden">
+            Sandbox
+          </span>
+        </div>
+        <SidebarTrigger />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Build</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton isActive>
-                  <HomeIcon />
-                  <span>Home</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton>
-                  <Gamepad2Icon />
-                  <span>Games</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton>
-                  <BlocksIcon />
-                  <span>Templates</span>
+                <SidebarMenuButton
+                  isActive={pathname === "/"}
+                  render={<Link href="/" />}
+                >
+                  <SquarePenIcon />
+                  <span>New game</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Recents</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <Empty className="border border-dashed p-2 group-data-[collapsible=icon]:hidden">
+              <EmptyDescription className="text-xs">
+                Your games will live here.
+              </EmptyDescription>
+            </Empty>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
@@ -64,11 +74,27 @@ function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton>
-              <SettingsIcon />
-              <span>Settings</span>
+              <CoinsIcon />
+              <span>Credits</span>
             </SidebarMenuButton>
+            <SidebarMenuBadge>$1.00</SidebarMenuBadge>
           </SidebarMenuItem>
         </SidebarMenu>
+        <div className="flex h-10 items-center justify-between px-2 group-data-[collapsible=icon]:hidden">
+          <OrganizationSwitcher
+            appearance={{
+              elements: {
+                rootBox: "w-full! max-w-full",
+                organizationSwitcherTrigger:
+                  "w-full! max-w-full justify-between!",
+                organizationPreview: "min-w-0",
+                organizationPreviewTextContainer: "min-w-0",
+                organizationPreviewMainIdentifier: "truncate",
+              },
+            }}
+          />
+          <UserButton />
+        </div>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
