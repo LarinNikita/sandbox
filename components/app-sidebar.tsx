@@ -1,7 +1,7 @@
 "use client"
 
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs"
-import { CoinsIcon, SquarePenIcon } from "lucide-react"
+import { CoinsIcon, MessageSquareIcon, SquarePenIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -28,8 +28,8 @@ function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="flex-row items-center justify-between group-data-[collapsible=icon]:flex-col">
-        <div className="flex items-center gap-2 p-2 group-data-[collapsible=icon]:p-0">
+      <SidebarHeader className="flex-row items-center justify-between group-data-[collapsible=icon]:justify-center">
+        <div className="flex items-center gap-2 p-2 group-data-[collapsible=icon]:hidden">
           <Image
             src="/logo.svg"
             alt=""
@@ -37,9 +37,7 @@ function AppSidebar() {
             height={20}
             className="size-5"
           />
-          <span className="font-logo text-base leading-tight group-data-[collapsible=icon]:hidden">
-            Sandbox
-          </span>
+          <span className="font-logo text-base leading-tight">Sandbox</span>
         </div>
         <SidebarTrigger />
       </SidebarHeader>
@@ -67,6 +65,14 @@ function AppSidebar() {
                 Your games will live here.
               </EmptyDescription>
             </Empty>
+            <SidebarMenu className="hidden group-data-[collapsible=icon]:flex">
+              <SidebarMenuItem>
+                <SidebarMenuButton>
+                  <MessageSquareIcon />
+                  <span>Recents</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
@@ -80,11 +86,12 @@ function AppSidebar() {
             <SidebarMenuBadge>$1.00</SidebarMenuBadge>
           </SidebarMenuItem>
         </SidebarMenu>
-        <div className="flex h-10 items-center justify-between px-2 group-data-[collapsible=icon]:hidden">
+        <div className="flex h-10 items-center justify-between px-2 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0">
           <OrganizationSwitcher
             appearance={{
               elements: {
-                rootBox: "w-full! max-w-full",
+                rootBox:
+                  "w-full! max-w-full group-data-[collapsible=icon]:hidden!",
                 organizationSwitcherTrigger:
                   "w-full! max-w-full justify-between!",
                 organizationPreview: "min-w-0",
