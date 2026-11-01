@@ -1,4 +1,4 @@
-import { UserButton } from "@clerk/nextjs"
+import { OrganizationSwitcher, UserButton } from "@clerk/nextjs"
 import { auth } from "@clerk/nextjs/server"
 import Image from "next/image"
 
@@ -24,12 +24,13 @@ export default async function Page() {
             What should we build today?
           </EmptyTitle>
           <EmptyDescription>
-            Build your own racers, shooters, puzzles and whole worlds using
-            your own words. If you can describe it, you can play it.
+            Build your own racers, shooters, puzzles and whole worlds using your
+            own words. If you can describe it, you can play it.
           </EmptyDescription>
         </EmptyHeader>
       </Empty>
       <UserButton />
+      <OrganizationSwitcher />
     </main>
   )
 }
